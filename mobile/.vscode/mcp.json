@@ -1,0 +1,24 @@
+{
+	"servers": {
+		"UIPro by Locofy": {
+			"args": [
+				"-y",
+				"@locofy/uipro-mcp@latest"
+			],
+			"command": "npx",
+			"env": {
+				"IDE_SOURCE": "vscode"
+			},
+			"type": "stdio"
+		},
+		"my-mcp-server-e034fba2": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@locofy/uipro-mcp@latest"
+			]
+		}
+	},
+	"inputs": []
+}
