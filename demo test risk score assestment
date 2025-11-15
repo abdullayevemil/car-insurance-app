@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBD Risk Assessment</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px; background: #f0f2f5; }
+  .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+  h1 { text-align: center; color: #222; }
+  label { display: block; margin-top: 12px; font-weight: bold; }
+  input { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 6px; }
+  button { width: 100%; margin-top: 20px; padding: 12px; background: #0057ff; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+  button:hover { background: #0041c9; }
+  .result { margin-top: 20px; font-size: 1.3em; font-weight: bold; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>OBD Risk Assessment</h1>
+
+  <label>Speed (km/h)</label>
+  <input type="number" id="speed" value="80">
+
+  <label>RPM</label>
+  <input type="number" id="rpm" value="2500">
+
+  <label>Acceleration (m/s²)</label>
+  <input type="number" id="accel" value="1.5">
+
+  <label>Braking Force (m/s²)</label>
+  <input type="number" id="brake" value="2">
+
+  <label>Hard Turns (per trip)</label>
+  <input type="number" id="turns" value="1">
+
+  <button onclick="calculateRisk()">Calculate Risk</button>
+
+  <div class="result" id="result">Risk Score: -</div>
+</div>
+
+<script>
+function calculateRisk() {
+
+    let speed = parseFloat(document.getElementById("speed").value);
+    let rpm = parseFloat(document.getElementById("rpm").value);
+    let accel = parseFloat(document.getElementById("accel").value);
+    let brake = parseFloat(document.getElementById("brake").value);
+    let turns = parseFloat(document.getElementById("turns").value);
+
+    // More realistic scoring (0–20 per category)
+    let score_speed =
+        speed < 60 ? 2 :
+        speed < 90 ? 8 :
+        speed < 120 ? 15 : 20;
+
+    let score_rpm =
+        rpm < 2000 ? 3 :
+        rpm < 3500 ? 10 :
+        rpm < 5000 ? 16 : 20;
+
+    let score_accel =
+        accel < 1 ? 4 :
+        accel < 2 ? 10 :
+        accel < 3 ? 16 : 20;
+
+    let score_brake =
+        brake < 1 ? 2 :
+        brake < 3 ? 10 :
+        brake < 5 ? 16 : 20;
+
+    let score_turns =
+        turns === 0 ? 5 :
+        turns <= 2 ? 12 :
+        turns <= 4 ? 16 : 20;
+
+    // Total max possible = 100
+    let total = score_speed + score_rpm + score_accel + score_brake + score_turns;
+
+    let riskLevel =
+        total < 35 ? "LOW RISK" :
+        total < 70 ? "MEDIUM RISK" :
+        "HIGH RISK";
+
+    document.getElementById("result").innerText =
+        "Risk Score: " + total + " (" + riskLevel + ")";
+}
+</script>
+
+</body>
+</html>
